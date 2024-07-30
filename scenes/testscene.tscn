@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://lg4wftyoelfg"]
+
+[ext_resource type="PackedScene" uid="uid://bufbmn8exlg6w" path="res://scenes/player.tscn" id="1_nrbob"]
+[ext_resource type="Texture2D" uid="uid://dwm2n14iabbp4" path="res://icon.svg" id="2_drfkx"]
+
+[sub_resource type="Gradient" id="Gradient_vtgqg"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.709957)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jebmm"]
+gradient = SubResource("Gradient_vtgqg")
+width = 1024
+height = 1024
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.527523, 0.527523)
+
+[sub_resource type="Environment" id="Environment_nrmhq"]
+background_mode = 3
+glow_enabled = true
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(51, 1)
+texture = SubResource("GradientTexture2D_jebmm")
+texture_scale = 0.1
+
+[node name="Player" parent="." instance=ExtResource("1_nrbob")]
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(18, -25)
+texture = ExtResource("2_drfkx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nrmhq")
+
+[editable path="Player"]

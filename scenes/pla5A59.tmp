@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://bufbmn8exlg6w"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_q7jwx"]
+[ext_resource type="Texture2D" uid="uid://bi76muu1svgxc" path="res://assets/textures/character.tres" id="1_x6udu"]
+[ext_resource type="PackedScene" uid="uid://dvku028330g1q" path="res://scenes/components/velocity_component.tscn" id="3_r5m85"]
+[ext_resource type="Script" path="res://scripts/player_camera.gd" id="4_teusl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l4er5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_x6udu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_q7jwx")
+max_strafe_energy = 3.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(24.325, 37.838, 38.379, 1)
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_l4er5")
+
+[node name="VelocityComponent" parent="." instance=ExtResource("3_r5m85")]
+max_velocity = 100.0
+friction = 10.0
+stop_speed = 50.0
+modifiers = {
+"double": 0.0
+}
+
+[node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target_node")]
+top_level = true
+ignore_rotation = false
+zoom = Vector2(5.49, 5.49)
+script = ExtResource("4_teusl")
+target_node = NodePath("..")
