@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://bir7q75sx2jjj"]
+
+[ext_resource type="Shader" path="res://assets/shaders/fire.gdshader" id="1_3uy3k"]
+[ext_resource type="Texture2D" uid="uid://d2bcv6mhnnxbo" path="res://assets/textures/neutral-lut-1261839116.png" id="2_ief5k"]
+
+[sub_resource type="GDScript" id="GDScript_hxsyh"]
+resource_name = "asd"
+script/source = "extends Control
+
+
+var x := 1.0
+var target_x := 1.0
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed(\"shoot\"):
+		target_x = randf_range(0.0, 2.0)
+	x = Math.smooth_nudgef(x, target_x, 5.0, delta)
+	$ColorRect.material.set_shader_parameter(\"y_offset\", x)
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o3e26"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yxc7a"]
+seamless = true
+noise = SubResource("FastNoiseLite_o3e26")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_23ihf"]
+noise_type = 2
+frequency = 0.0069
+offset = Vector3(1000, 0, 0)
+cellular_return_type = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w7wq5"]
+seamless = true
+noise = SubResource("FastNoiseLite_23ihf")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nxv6p"]
+shader = ExtResource("1_3uy3k")
+shader_parameter/anim_speed = 0.415
+shader_parameter/pixellation = 100.0
+shader_parameter/y_offset = 0.405
+shader_parameter/zoom = 0.51
+shader_parameter/opacity = 0.0
+shader_parameter/noise_text = SubResource("NoiseTexture2D_yxc7a")
+shader_parameter/text = ExtResource("2_ief5k")
+shader_parameter/texts = SubResource("NoiseTexture2D_w7wq5")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_hxsyh")
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.694118, 0.113725, 1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_nxv6p")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2

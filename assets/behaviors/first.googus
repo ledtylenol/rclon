@@ -1,0 +1,5 @@
+idle:
+distance > 200.0
+chase:
+time > 0.0
+distance < 200.0

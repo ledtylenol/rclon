@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ProjData" load_steps=4 format=3 uid="uid://dl0j0b4k6jqgu"]
+
+[ext_resource type="Script" path="res://scripts/generic/proj_data.gd" id="1_le83d"]
+[ext_resource type="Texture2D" uid="uid://cacqj8v7w7u28" path="res://assets/atlases/projectiles.png" id="2_k2k5j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t72w1"]
+atlas = ExtResource("2_k2k5j")
+region = Rect2(0, 0, 8, 8)
+
+[resource]
+script = ExtResource("1_le83d")
+sprite = SubResource("AtlasTexture_t72w1")
+effects = 0
+min_dmg = 5
+max_dmg = 150
+range = 2.0
+lifetime = 112.0

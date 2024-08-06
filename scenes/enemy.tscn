@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq64vc2xc5te3"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_e5ged"]
+[ext_resource type="Script" path="res://scripts/components/velocity_component.gd" id="2_fejlb"]
+[ext_resource type="Script" path="res://scripts/enemy/brain_base.gd" id="3_v4ndc"]
+[ext_resource type="Script" path="res://scripts/generic/hurtbox.gd" id="4_3aqx6"]
+[ext_resource type="Script" path="res://scripts/components/health_component.gd" id="5_wkyji"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6hmsn"]
+radius = 100.0
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("velocity_component")]
+script = ExtResource("1_e5ged")
+velocity_component = NodePath("VelocityComponent")
+
+[node name="VelocityComponent" type="Node2D" parent="."]
+script = ExtResource("2_fejlb")
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+shape = SubResource("CircleShape2D_6hmsn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="BasicEnemyBrain" type="Node" parent="."]
+script = ExtResource("3_v4ndc")
+behavior_file = "res://assets/behaviors/first.googus"
+
+[node name="Hurtbox" type="Area2D" parent="."]
+script = ExtResource("4_3aqx6")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("5_wkyji")
+max_health = null
+
+[connection signal="body_entered" from="PlayerDetection" to="BasicEnemyBrain" method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="PlayerDetection" to="BasicEnemyBrain" method="_on_player_detection_body_exited"]

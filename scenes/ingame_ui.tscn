@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmv7o3rp0b2ok"]
+
+[sub_resource type="Gradient" id="Gradient_3ilrp"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k43mw"]
+gradient = SubResource("Gradient_3ilrp")
+fill_from = Vector2(1, 0.65812)
+
+[node name="MarginContainer" type="MarginContainer"]
+anchors_preset = -1
+anchor_left = 0.766493
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Minimap" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="Minimap"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_k43mw")

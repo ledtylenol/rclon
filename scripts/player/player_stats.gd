@@ -7,6 +7,7 @@ class_name PlayerStats
 @export var damage_taken := 0
 @export var experience := 0
 
+
 signal stat_changed(which: String, value: int)
 @export_group("Stats")
 @export var stats:  Dictionary = {

@@ -25,3 +25,7 @@ func on_state_transition(state: State, next: String) -> void:
 	next_state.on_enter()
 	next_state.process_mode = Node.PROCESS_MODE_INHERIT
 	current_state = next_state
+
+func _process(delta: float) -> void:
+	if current_state != states["shoot"]:
+		states["shoot"].cooldown = max(0.0, states["shoot"].cooldown - delta)

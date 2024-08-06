@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqsw2avino503"]
+
+[ext_resource type="Script" path="res://scripts/util/equipments.gd" id="1_24u21"]
+[ext_resource type="Script" path="res://scripts/player/equipment.gd" id="2_oib5b"]
+[ext_resource type="Resource" uid="uid://b0m7cu4j5jtjn" path="res://assets/equipments/weapons/t1daggers.tres" id="3_jknmh"]
+
+[node name="Equipments" type="Node"]
+script = ExtResource("1_24u21")
+equipment_array = Array[ExtResource("2_oib5b")]([ExtResource("3_jknmh")])

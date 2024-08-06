@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="PlayerWeapon" load_steps=6 format=3 uid="uid://b0m7cu4j5jtjn"]
+
+[ext_resource type="Script" path="res://scripts/generic/proj_data.gd" id="1_t7803"]
+[ext_resource type="Texture2D" uid="uid://cacqj8v7w7u28" path="res://assets/atlases/projectiles.png" id="2_ubn1t"]
+[ext_resource type="Script" path="res://scripts/player/player_weapon.gd" id="3_hh6fo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7mjd"]
+atlas = ExtResource("2_ubn1t")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="Resource" id="Resource_1cgar"]
+script = ExtResource("1_t7803")
+sprite = SubResource("AtlasTexture_w7mjd")
+effects = 0
+min_dmg = 5
+max_dmg = 500
+range = 12.0
+lifetime = 0.5
+
+[resource]
+script = ExtResource("3_hh6fo")
+projectile = SubResource("Resource_1cgar")
+rof_mult = 0.0
+shot_count = 1
+spread = 0.0
+name = "Steel Dagger"
+description = ""
+stats = {
+"att": 0,
+"def": 0,
+"dex": 0,
+"hp": 0,
+"mp": 0,
+"spd": 0,
+"vit": 0,
+"wis": 0
+}
+bag_type = 0

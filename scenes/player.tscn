@@ -1,15 +1,18 @@
-[gd_scene load_steps=15 format=3 uid="uid://bufbmn8exlg6w"]
+[gd_scene load_steps=20 format=3 uid="uid://bufbmn8exlg6w"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_q7jwx"]
 [ext_resource type="SpriteFrames" uid="uid://bg0c4v2j12qq1" path="res://assets/sprite_animations/player.tres" id="2_1rv08"]
 [ext_resource type="Shader" path="res://assets/shaders/player.gdshader" id="2_81qsh"]
 [ext_resource type="Script" path="res://scripts/player/player_stats.gd" id="2_ldm03"]
+[ext_resource type="Resource" uid="uid://b0m7cu4j5jtjn" path="res://assets/equipments/weapons/t1daggers.tres" id="3_11b6j"]
 [ext_resource type="PackedScene" uid="uid://dvku028330g1q" path="res://scenes/components/velocity_component.tscn" id="3_r5m85"]
 [ext_resource type="Script" path="res://scripts/player/player_camera.gd" id="4_teusl"]
 [ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="5_frss8"]
 [ext_resource type="Script" path="res://scripts/state_machine/idle_state.gd" id="6_ncibh"]
 [ext_resource type="Script" path="res://scripts/state_machine/walk_state.gd" id="7_lhuwq"]
 [ext_resource type="Script" path="res://scripts/state_machine/shoot_state.gd" id="8_40dxe"]
+[ext_resource type="Script" path="res://scripts/generic/hurtbox.gd" id="12_vn22y"]
+[ext_resource type="Script" path="res://scripts/components/effect_component.gd" id="13_2eyj7"]
 
 [sub_resource type="Resource" id="Resource_un8k1"]
 script = ExtResource("2_ldm03")
@@ -21,7 +24,7 @@ experience = 0
 stats = {
 "att": 17,
 "def": 0,
-"dex": 50,
+"dex": 17,
 "hp": 100,
 "mp": 100,
 "spd": 17,
@@ -42,23 +45,32 @@ fill = 1
 fill_from = Vector2(0.508547, 0.465812)
 fill_to = Vector2(0.854701, 0.166667)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_xg3jb"]
+radius = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t71gg"]
+radius = 3.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("velocity_component")]
+collision_layer = 8
+collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_q7jwx")
 stats = SubResource("Resource_un8k1")
+weapon = ExtResource("3_11b6j")
+velocity_component = NodePath("VelocityComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(24.325, 37.838, 38.379, 1)
 texture_filter = 1
 material = SubResource("ShaderMaterial_wdsyv")
 sprite_frames = ExtResource("2_1rv08")
-animation = &"shoot_up"
+animation = &"shoot_down"
 
 [node name="VelocityComponent" parent="." instance=ExtResource("3_r5m85")]
 max_velocity = 100.0
 acceleration = 4.0
 friction = 2.0
-stop_speed = 50.0
 
 [node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target_node", "velocity_component")]
 top_level = true
@@ -93,10 +105,6 @@ player = NodePath("../..")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 5
 anchor_left = 0.5
@@ -114,5 +122,32 @@ text = "add 5 dex"
 layout_mode = 2
 text = "remove 5 dex"
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("12_vn22y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_xg3jb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_t71gg")
+
+[node name="EffectComponent" type="Node" parent="."]
+script = ExtResource("13_2eyj7")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -64.0
+offset_top = -7.0
+offset_right = 782.0
+offset_bottom = 16.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="hit" from="Hurtbox" to="." method="_on_hurtbox_hit"]
+[connection signal="add_effect" from="EffectComponent" to="." method="_on_add"]
+[connection signal="remove_effect" from="EffectComponent" to="." method="_on_remove"]

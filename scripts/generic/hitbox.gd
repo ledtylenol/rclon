@@ -12,8 +12,8 @@ func _init(damage: int, is_enemy: bool, effects: int = 0, pierce = false) -> voi
 	self.effects = effects
 	self.pierce = pierce
 func _ready() -> void:
-	collision_layer = 0
+	collision_mask = 0
 	if is_enemy:
-		collision_mask = 1 << Constants.PLAYER_LAYER
+		collision_layer = 1 << Constants.PLAYER_LAYER
 	else:
-		collision_mask = 1 << Constants.ENEMY_LAYER
+		collision_layer = 1 << Constants.ENEMY_LAYER

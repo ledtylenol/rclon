@@ -21,7 +21,6 @@ func _process(delta: float) -> void:
 		var i: int = animations.find_key(sprite.animation as String)
 
 		var angle := sprite.transform.x.angle_to(player.former_direction)
-		$"../../CanvasLayer/Label".text = "angle: %.2f \n%.2f %.2f\n%s" % [angle, -PI/2, -PI/4, sprite.animation]
 		if angle >= -3*PI/4 and angle <= -PI/4:
 			sprite.play("idle_up")
 		elif angle <= PI/4 or abs(angle) > 0.01 + 3*PI/4:
