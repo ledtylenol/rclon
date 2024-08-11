@@ -3,7 +3,5 @@ class_name PlayerWeapon
 
 @export_group("Weapon Params")
 @export var projectile: ProjData
-
-@export var rof_mult: float
-@export var shot_count: int = 1
-@export var spread: float
+@export var bullet_pattern: PackedScene
+@export var rof_mult: float = 1.0

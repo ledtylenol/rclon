@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="PlayerWeapon" load_steps=8 format=3 uid="uid://dew6jec3ny52q"]
+
+[ext_resource type="Script" path="res://scripts/player/player_weapon.gd" id="1_bvxge"]
+[ext_resource type="PackedScene" uid="uid://c5o74im64ox2t" path="res://scenes/bullets/bullet_group1.tscn" id="1_cdoai"]
+[ext_resource type="Script" path="res://scripts/generic/status_effect.gd" id="2_l5ot4"]
+[ext_resource type="Script" path="res://scripts/generic/proj_data.gd" id="3_4m2y4"]
+[ext_resource type="Texture2D" uid="uid://cacqj8v7w7u28" path="res://assets/atlases/projectiles.png" id="4_bmxbh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpu4q"]
+atlas = ExtResource("4_bmxbh")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="Resource" id="Resource_35pwc"]
+script = ExtResource("3_4m2y4")
+sprite = SubResource("AtlasTexture_hpu4q")
+effects = Array[ExtResource("2_l5ot4")]([])
+min_dmg = 0
+max_dmg = 0
+range = 8.0
+lifetime = 0.3
+
+[resource]
+script = ExtResource("1_bvxge")
+projectile = SubResource("Resource_35pwc")
+bullet_pattern = ExtResource("1_cdoai")
+rof_mult = 1.0
+name = "T1 staff"
+description = "yesy es"
+stats = {
+"att": 0,
+"def": 0,
+"dex": 0,
+"hp": 0,
+"mp": 0,
+"spd": 0,
+"vit": 0,
+"wis": 0
+}
+bag_type = 0

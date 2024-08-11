@@ -5,7 +5,7 @@ class_name PlayerCamera
 
 @export var target_node: Node2D 
 @export var velocity_component: VelocityComponent
-var target := Vector2.ZERO
+var _target := Vector2.ZERO
 var follow_speed := 5.0
 var target_offset := false
 var snap := true
@@ -14,7 +14,7 @@ var zoom_speed := 5.0
 func _physics_process(delta: float) -> void:
 	var rot := Input.get_axis("rotate_l", "rotate_r")
 	update_target()
-	var target = target if not target_offset else target - transform.y * 35.0
+	var target = _target if not target_offset else _target - transform.y * 35.0
 	if snap:
 		position = target
 		zoom = Vector2(target_zoom, target_zoom)
@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 
 func update_target() -> void:
 	if target_node:
-		target = target_node.global_position
+		_target = target_node.global_position
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed():

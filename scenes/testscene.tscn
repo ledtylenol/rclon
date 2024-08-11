@@ -89,6 +89,7 @@ texture = SubResource("GradientTexture2D_jebmm")
 texture_scale = 0.1
 
 [node name="Player" parent="." instance=ExtResource("1_nrbob")]
+position = Vector2(6, 51)
 
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(18, -25)

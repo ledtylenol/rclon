@@ -1,31 +1,47 @@
-extends Node
+# // state_machine.gd
 class_name StateMachine
 
+signal enter(state_name: StringName)
+signal exit(state_name: StringName)
 
-@export var initial_state: State
-var states: Dictionary
 var current_state: State
-func _ready() -> void:
-	for child in get_children():
-		if child is State:
-			states[child.name.to_lower()] = child
-			child.transitioned.connect(on_state_transition)
-			child.process_mode = Node.PROCESS_MODE_DISABLED
-	initial_state.process_mode = Node.PROCESS_MODE_INHERIT
-	current_state = initial_state
+var blackboard := {}
+var states: Dictionary
 
-func on_state_transition(state: State, next: String) -> void:
-	var next_state: State = states[next.to_lower()]
-	if not next_state:
-		return
-	if next_state == current_state:
-		return
-	current_state.on_exit()
-	current_state.process_mode = Node.PROCESS_MODE_DISABLED
-	next_state.on_enter()
-	next_state.process_mode = Node.PROCESS_MODE_INHERIT
-	current_state = next_state
+static func create(initial_states: Dictionary) -> StateMachine:
+	var state_machine := {}
+	for state in initial_states:
+		var transitions = initial_states[state]
+		var state_obj = State.new(state)
+		if transitions.has("enter"):
+			state.enter = transitions["enter"]
+			transitions.erase("enter")
+		if transitions.has("exit"):
+			state.exit = transitions["exit"]
+			transitions.erase("exit")
+		state_obj.transitions = transitions
+		state_machine[state] = state_obj
+	for state_name in state_machine:
+		var state = state_machine[state_name]
+		for transition_name in state.transitions:
+			var destination_state_name = state.transitions[transition_name]
+			state.transitions[transition_name] = state_machine[destination_state_name]
+	var result := StateMachine.new()
+	result.state_machine = state_machine
+	return result
 
-func _process(delta: float) -> void:
-	if current_state != states["shoot"]:
-		states["shoot"].cooldown = max(0.0, states["shoot"].cooldown - delta)
+func set_current_state(state_name: StringName) -> StateMachine:
+	if not states.has(state_name):
+		return self
+	current_state = states[state_name]
+	current_state.enter.call(blackboard)
+	enter.emit(current_state.name)
+	return self
+
+
+func transition_to(transition_name: String):
+	var new_state = current_state.get_transition(transition_name)
+	if new_state != null:
+		current_state.exit.call(blackboard)
+		exit.emit(current_state.name)
+		set_current_state(new_state.name)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://brul8w8ihvo0n"]
+
+[ext_resource type="Script" path="res://scripts/bullets/bullet_group.gd" id="1_ce5k2"]
+[ext_resource type="Script" path="res://scripts/bullets/projectile.gd" id="2_ww08t"]
+
+[node name="BulletGroup" type="Node2D"]
+script = ExtResource("1_ce5k2")
+
+[node name="Projectile" type="CharacterBody2D" parent="."]
+script = ExtResource("2_ww08t")

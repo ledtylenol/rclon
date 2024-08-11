@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://c5o74im64ox2t"]
+
+[ext_resource type="Script" path="res://scripts/bullets/bullet_group.gd" id="1_wq50f"]
+[ext_resource type="Script" path="res://scripts/bullets/sinus_projectile.gd" id="2_ox7c7"]
+[ext_resource type="Script" path="res://scripts/generic/status_effect.gd" id="3_tr8ec"]
+[ext_resource type="Script" path="res://scripts/generic/proj_data.gd" id="4_exo8s"]
+[ext_resource type="Texture2D" uid="uid://cacqj8v7w7u28" path="res://assets/atlases/projectiles.png" id="5_jcg1n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ks6gw"]
+atlas = ExtResource("5_jcg1n")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="Resource" id="Resource_pibm2"]
+script = ExtResource("4_exo8s")
+sprite = SubResource("AtlasTexture_ks6gw")
+effects = Array[ExtResource("3_tr8ec")]([])
+min_dmg = 100
+max_dmg = 500
+range = 100.0
+lifetime = 1.0
+
+[node name="BulletGroup" type="Node2D"]
+script = ExtResource("1_wq50f")
+lifetime = 0.25
+range = 7.5
+
+[node name="SinProjectile" type="CharacterBody2D" parent="."]
+position = Vector2(5, 0)
+script = ExtResource("2_ox7c7")
+t = 10.0
+amplitude = 160.0
+projectile_data = SubResource("Resource_pibm2")
+
+[node name="SinProjectile2" type="CharacterBody2D" parent="."]
+position = Vector2(5, 0)
+script = ExtResource("2_ox7c7")
+t = -10.0
+amplitude = 160.0
+projectile_data = SubResource("Resource_pibm2")

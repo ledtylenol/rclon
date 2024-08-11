@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://den0gwu6hlayc"]
+
+[sub_resource type="GDScript" id="GDScript_g5fql"]
+script/source = "extends Node
+var states := {
+	\"idle\":{
+		\"enter\": func(data):
+			print(\"AAAAA\"),
+		\"in_sight\": \"chase\",
+	},
+	\"chase\":{
+		\"enter\": func(data):
+			print(\"BBBBBB\"),
+		\"in_range\": \"attack\",
+		\"out_of_sight\": \"idle\",
+	},
+	\"attack\":{
+		\"enter\": func(data):
+			if Input.is_action_just_pressed(\"shoot\"): machine.transition_to(\"out_of_sight\"),
+		\"out_of_sight\": \"idle\",
+	},
+}
+
+
+var machine := StateMachine.create(states).set_current_state(\"idle\")
+"
+
+[node name="StateMachinePlayground" type="Node"]
+script = SubResource("GDScript_g5fql")

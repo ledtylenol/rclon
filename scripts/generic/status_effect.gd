@@ -31,14 +31,13 @@ enum EffectIndex {
 	Hexed = 27,
 	ParalyzedImmune = 28
 }
-var effect: EffectIndex = 0
+var effect: EffectIndex = 0 as EffectIndex
 var duration: float
 var name: String
 signal queue_remove
-signal queue_add
-func _init(effect: EffectIndex, duration: float ) -> void:
-	self.effect = effect
-	self.duration = duration
+func _init(_effect: EffectIndex, _duration: float ) -> void:
+	self.effect = _effect
+	self.duration = _duration
 	name = "%s" % EffectIndex.find_key(effect)
 func get_effect() -> int:
 	return 1 << effect

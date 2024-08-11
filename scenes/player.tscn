@@ -4,8 +4,8 @@
 [ext_resource type="SpriteFrames" uid="uid://bg0c4v2j12qq1" path="res://assets/sprite_animations/player.tres" id="2_1rv08"]
 [ext_resource type="Shader" path="res://assets/shaders/player.gdshader" id="2_81qsh"]
 [ext_resource type="Script" path="res://scripts/player/player_stats.gd" id="2_ldm03"]
-[ext_resource type="Resource" uid="uid://b0m7cu4j5jtjn" path="res://assets/equipments/weapons/t1daggers.tres" id="3_11b6j"]
 [ext_resource type="PackedScene" uid="uid://dvku028330g1q" path="res://scenes/components/velocity_component.tscn" id="3_r5m85"]
+[ext_resource type="Resource" uid="uid://dew6jec3ny52q" path="res://assets/equipments/weapons/t1staff.tres" id="3_wx1y3"]
 [ext_resource type="Script" path="res://scripts/player/player_camera.gd" id="4_teusl"]
 [ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="5_frss8"]
 [ext_resource type="Script" path="res://scripts/state_machine/idle_state.gd" id="6_ncibh"]
@@ -57,7 +57,7 @@ collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_q7jwx")
 stats = SubResource("Resource_un8k1")
-weapon = ExtResource("3_11b6j")
+weapon = ExtResource("3_wx1y3")
 velocity_component = NodePath("VelocityComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

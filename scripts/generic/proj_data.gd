@@ -4,7 +4,7 @@ class_name ProjData
 @export var sprite: AtlasTexture
 
 @export_group("Projectile Stats")
-@export var effects: int = 0
+@export var effects: Array[StatusEffect]
 @export var min_dmg: int
 @export var max_dmg: int
 @export var range: float = 2.0

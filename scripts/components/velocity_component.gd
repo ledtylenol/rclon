@@ -12,14 +12,13 @@ var delta: float
 @export var acceleration := 10.0
 @export var friction := 30.0
 
-signal mod_changed
 func _ready() -> void:
 	var p = get_parent() as Entity
 	if p:
 		p.velocity_component = self
 
-func _physics_process(delta: float) -> void:
-	self.delta = delta
+func _physics_process(_delta: float) -> void:
+	self.delta = _delta
 
 func accel_to_dir(dir: Vector2):
 	velocity = Math.smooth_nudgev(velocity, dir * max_velocity, acceleration, delta)

@@ -1,6 +1,8 @@
-[gd_resource type="Resource" script_class="PlayerWeapon" load_steps=6 format=3 uid="uid://b0m7cu4j5jtjn"]
+[gd_resource type="Resource" script_class="PlayerWeapon" load_steps=8 format=3 uid="uid://b0m7cu4j5jtjn"]
 
+[ext_resource type="PackedScene" uid="uid://brul8w8ihvo0n" path="res://scenes/bullets/bullet_group.tscn" id="1_ebyq1"]
 [ext_resource type="Script" path="res://scripts/generic/proj_data.gd" id="1_t7803"]
+[ext_resource type="Script" path="res://scripts/generic/status_effect.gd" id="2_4yxmx"]
 [ext_resource type="Texture2D" uid="uid://cacqj8v7w7u28" path="res://assets/atlases/projectiles.png" id="2_ubn1t"]
 [ext_resource type="Script" path="res://scripts/player/player_weapon.gd" id="3_hh6fo"]
 
@@ -11,18 +13,17 @@ region = Rect2(0, 0, 8, 8)
 [sub_resource type="Resource" id="Resource_1cgar"]
 script = ExtResource("1_t7803")
 sprite = SubResource("AtlasTexture_w7mjd")
-effects = 0
+effects = Array[ExtResource("2_4yxmx")]([])
 min_dmg = 5
 max_dmg = 500
-range = 12.0
-lifetime = 0.5
+range = 5.0
+lifetime = 0.2
 
 [resource]
 script = ExtResource("3_hh6fo")
 projectile = SubResource("Resource_1cgar")
-rof_mult = 0.0
-shot_count = 1
-spread = 0.0
+bullet_pattern = ExtResource("1_ebyq1")
+rof_mult = 1.0
 name = "Steel Dagger"
 description = ""
 stats = {

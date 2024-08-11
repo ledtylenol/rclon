@@ -22,8 +22,8 @@ func _process(delta: float) -> void:
 	if ticking_effects:
 		for effect in effects:
 			effect.tick(delta)
-func on_hit(_who: Hitbox, _m: int, effects: Array[StatusEffect]) -> void:
-	for effect in effects:
+func on_hit(_who: Hitbox, _m: int, _effects: Array[StatusEffect]) -> void:
+	for effect in _effects:
 		do_effect(effect)
 
 

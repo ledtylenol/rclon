@@ -27,11 +27,9 @@ func _ready() -> void:
 	recalculate_tps()
 	recalculate_hps()
 	stats.stat_changed.connect(on_stat_change)
-	var v1 = Vector2.RIGHT
-	var v2 = Vector2.from_angle(PI/3)
-	print(v1.angle_to(v2))
-	print (v1.x)
-func _physics_process(delta: float) -> void:
+	bebe()
+	print("bebe?")
+func _physics_process(_delta: float) -> void:
 	#print(effects >> StatusEffect.EffectIndex.Speedy)
 	process_inputs()
 	if direction:
@@ -56,7 +54,7 @@ func process_inputs() -> void:
 	direction =  Input.get_vector("left", "right", "up", "down").rotated(sprite.rotation)
 
 func recalculate_aps() -> void:
-	attacks_per_sec = (1.0 + 0.5 * (effects >> StatusEffect.EffectIndex.Berserk & 1)) * 6.5 * (stats.stats["dex"] + 17.3) / 75
+	attacks_per_sec = (1.0 + 3.5 * (effects >> StatusEffect.EffectIndex.Berserk & 1)) * 6.5 * (stats.stats["dex"] + 17.3) / 75
 func recalculate_hps() -> void:
 	hps = 0.24 * (stats.stats["vit"] + 4.2)
 func recalculate_mps() -> void:
@@ -65,7 +63,7 @@ func recalculate_tps() -> void:
 	velocity_component.max_velocity = 5.6 * (stats.stats["spd"] + 53.5) / 75 * Constants.TILE_SIZE * (1.0 + 0.5 * (effects >> StatusEffect.EffectIndex.Speedy & 1))
 	if effects >> StatusEffect.EffectIndex.Slowed & 1:
 		velocity_component.max_velocity = 5.6 * (53.5 / 75) * Constants.TILE_SIZE
-func on_stat_change(which: String, val: int) -> void:
+func on_stat_change(which: String, _val: int) -> void:
 	match which:
 		"spd":
 			recalculate_tps()
@@ -83,8 +81,8 @@ func _on_button_2_pressed() -> void:
 	stats.set_stat("dex", stats.stats["dex"] - 5)
 
 
-func _on_hurtbox_hit(who: Hitbox, how_much: int, effects: int) -> void:
-	prints(who, how_much, effects)
+func _on_hurtbox_hit(who: Hitbox, how_much: int, _effects: int) -> void:
+	prints(who, how_much, _effects)
 
 func _on_add(which: int) -> void:
 	effects |= which
@@ -99,3 +97,35 @@ func set_effects(which: int) -> void:
 	recalculate_hps()
 	recalculate_mps()
 	recalculate_aps()
+
+func bebe() -> void:
+	print("bebe!")
+
+
+func on_enter_idle() -> void:
+	var angle = sprite.transform.x.angle_to(former_direction)
+
+	if angle >= -3*PI/4 and angle <= -PI/4:
+		sprite.play("idle_up")
+	elif angle <= PI/4 or abs(angle) > 0.01 + 3*PI/4:
+		sprite.play("idle_right")
+	else:
+		sprite.play("idle_down")
+	sprite.flip_h = abs(angle) > PI/2 and sprite.animation == "idle_right"
+
+func _process_idle(_delta: float) -> void:
+
+	var angle := sprite.transform.x.angle_to(former_direction)
+	if angle >= -3*PI/4 and angle <= -PI/4:
+		sprite.play("idle_up")
+	elif angle <= PI/4 or abs(angle) > 0.01 + 3*PI/4:
+		sprite.play("idle_right")
+	else:
+		sprite.play("idle_down")
+	sprite.flip_h = abs(angle) > PI/2 and sprite.animation == "idle_right"
+	if Input.is_action_pressed("shoot"):
+		transitioned.emit(self, "shoot")
+		return
+	elif player.direction:
+		transitioned.emit(self, "walk")
+		return
